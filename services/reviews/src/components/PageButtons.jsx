@@ -1,4 +1,4 @@
-import buttonRender from './buttonRender.jsx'
+import buttonRender from './buttonRender';
 import React from 'react';
 class PageButtons extends React.Component {
   constructor(props) {

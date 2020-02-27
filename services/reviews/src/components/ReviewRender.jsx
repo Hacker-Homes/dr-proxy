@@ -1,5 +1,5 @@
-import ShowOneReview from './ShowOneReview.jsx'
-import PageButtons from './PageButtons.jsx';
+import ShowOneReview from './ShowOneReview';
+import PageButtons from './PageButtons';
 import React from 'react';
 
 class ReviewRender extends React.Component {
@@ -12,7 +12,7 @@ class ReviewRender extends React.Component {
     e.preventDefault();
     const elmnt = document.getElementById("airbnb_reviews");
     function scrollToTop() {
-      elmnt.scrollIntoView({ behavior: 'smooth'}); // Top
+      elmnt.scrollIntoView({ behavior: 'smooth' }); // Top
     }
     if (e.target.value === "＜") {
       this.props.setCurPage(this.props.curPage - 1);

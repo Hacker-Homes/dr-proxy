@@ -1,6 +1,6 @@
-import RatingStar from './RatingStar.jsx'
+import RatingStar from './RatingStar';
 import React from 'react';
-import style from '../style.css';
+import style from '../../public/style.css';
 
 class RatingTable extends React.Component {
   constructor(props) {
