@@ -11,7 +11,7 @@ class ShowOneReview extends React.Component {
     super(props);
     this.state = {
       show_content: false,
-    }
+    };
   }
 
   showContent(e) {

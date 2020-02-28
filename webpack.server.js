@@ -3,13 +3,13 @@ const nodeExternals = require('webpack-node-externals');
 
 const ENTRY = path.resolve(__dirname, 'server', 'index.jsx');
 const OUTPUT_PATH = path.resolve(__dirname);
-const OUTPUT_FILENAME = 'bundle.js';
+const OUTPUT_FILENAME = 'server.js';
 
 module.exports = {
   target: 'node',
   externals: [nodeExternals()],
 
-  mode: 'development',
+  mode: 'production',
   entry: ENTRY,
   output: {
     path: OUTPUT_PATH,

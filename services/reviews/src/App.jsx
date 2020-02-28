@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import React from 'react';
-import axios from 'axios';
 import SearchBar from './components/SearchBar';
 import RatingTable from './components/RatingTable';
 import ReviewRender from './components/ReviewRender';
@@ -11,36 +10,25 @@ import style from '../public/style.css';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    const { reviews } = props.payload[0];
+
+    const revData = this.dataSlicer(reviews);
+    const { ratings, overall_rating } = this.findOverallRating(reviews);
     this.state = {
       original_data: [],
-      rev_data: [[]],
-      ratings: {},
-      overall_rating: 0,
-      num_reviews: 0,
+      rev_data: revData,
+      ratings,
+      overall_rating,
+      num_reviews: reviews.length,
       search_text: '',
       curPage: 0,
     };
 
+
     this.editSearchText = this.editSearchText.bind(this);
     this.clearSearchText = this.clearSearchText.bind(this);
     this.setCurPage = this.setCurPage.bind(this);
-  }
-
-  // fetch data while enter the website
-  componentDidMount() {
-    const { listingId } = this.props;
-    axios.get(`http://localhost:3001/api/reviews/${listingId}`)
-      .then((response) => {
-        this.dataSlicer(response.data[0].reviews);
-        this.setState({
-          original_data: response.data[0].reviews,
-          num_reviews: response.data[0].reviews.length,
-        });
-        this.findOverallRating(response.data[0].reviews);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   }
 
   setCurPage(page) {
@@ -75,22 +63,20 @@ class App extends React.Component {
       overall_rating += Number(average[key]);
     }
     overall_rating = Number((overall_rating / 6).toFixed(1));
-    this.setState({
+    return {
       ratings: average,
       overall_rating,
-    });
+    };
   }
 
   // slice data into 7 reviews per array. and store in rev_data
-  dataSlicer(rev_data) {
-    let totalPages = Math.ceil(rev_data.length / 7);
-    let dataForPages = [];
+  dataSlicer(revData) {
+    const totalPages = Math.ceil(revData.length / 7);
+    const dataForPages = [];
     for (let i = 0; i < totalPages; i++) {
-      dataForPages.push(rev_data.slice(7 * i, 7 * (i + 1)));
+      dataForPages.push(revData.slice(7 * i, 7 * (i + 1)));
     }
-    this.setState({
-      rev_data: dataForPages,
-    });
+    return dataForPages;
   }
 
   editSearchText(e) {

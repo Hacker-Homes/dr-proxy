@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import App from '../services/reviews/src/App';
+import axios from 'axios';
 import layout from './layout';
 
 const express = require('express');
@@ -16,9 +16,22 @@ console.log(PUBLIC_DIR);
 
 app.use('/', express.static(`.${PUBLIC_DIR}`));
 
+
 app.use('/homes/:listingId', (req, res) => {
   const { listingId } = req.params;
-  res.send(layout(<App listingId={listingId} />));
+
+  // API call
+  axios.get(`http://localhost:3001/api/reviews/${listingId}`)
+    .then((response) => {
+      res.send(layout(<App listingId={listingId} payload={response.data} />));
+    })
+    .catch(() => {
+      res.send(layout(<App listingId={listingId} />));
+    });
+});
+
+app.use('/', (req, res) => {
+  res.redirect('/homes/1');
 });
 
 app.listen(PORT, () => {

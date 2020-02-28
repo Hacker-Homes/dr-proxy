@@ -1,10 +1,13 @@
 import ReactDOMServer from 'react-dom/server';
 
-const layout = (...components) => `
+const layout = (reviewComponent) => `
 <!DOCTYPE html>
 <html>
+  <script src="http://localhost:3000/reviews.js"></script>
   <body>
-    ${components.map((component) => ReactDOMServer.renderToString(component))}
+    <div id="reviews">
+      ${ReactDOMServer.renderToString(reviewComponent)}
+    </div>
   </body>
 </html>
 `;
